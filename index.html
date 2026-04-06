@@ -27,12 +27,14 @@
       font-family:'Playfair Display',serif;
       font-size:48px;
       margin:10px 0;
+      animation: slideDown 1s ease;
     }
 
     h2 {
       font-size:22px;
       letter-spacing:4px;
       color:#9c7b5a;
+      animation: fadeInUp 1s ease;
     }
 
     img {
@@ -40,17 +42,26 @@
       max-width:600px;
       border-radius:16px;
       box-shadow:0 20px 50px rgba(0,0,0,0.15);
+      transition:0.5s;
+    }
+
+    img:hover {
+      transform:scale(1.03);
     }
 
     .name {
       font-size:56px;
       margin-top:30px;
+      animation: fadeInUp 1.2s ease;
     }
-
-    .date { font-size:36px; }
 
     .countdown { margin:20px 0; }
 
+    .glow {
+      text-shadow:0 0 10px rgba(255,215,180,0.8);
+    }
+
+    /* comments */
     .comments { margin-top:40px; }
 
     input, textarea {
@@ -59,11 +70,12 @@
       margin:6px 0;
       border-radius:8px;
       border:1px solid #ddd;
+      background:#fffaf5;
     }
 
     button {
       padding:12px 25px;
-      background:#b08968;
+      background:linear-gradient(135deg,#d4a373,#b08968);
       color:white;
       border:none;
       border-radius:8px;
@@ -89,6 +101,42 @@
       padding:12px;
       margin:10px;
       border-radius:10px;
+      box-shadow:0 5px 15px rgba(0,0,0,0.08);
+    }
+
+    @keyframes scrollLoop {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+
+    /* animations */
+    @keyframes fadeIn {
+      from {opacity:0;} to {opacity:1;}
+    }
+
+    @keyframes slideDown {
+      from {transform:translateY(-40px);opacity:0;}
+      to {transform:translateY(0);opacity:1;}
+    }
+
+    @keyframes fadeInUp {
+      from {transform:translateY(40px);opacity:0;}
+      to {transform:translateY(0);opacity:1;}
+    }
+
+    /* sparkle */
+    .sparkle {
+      position:fixed;
+      width:6px;
+      height:6px;
+      background:gold;
+      border-radius:50%;
+      animation:sparkle 3s linear infinite;
+    }
+
+    @keyframes sparkle {
+      0% { transform:translateY(0); opacity:1; }
+      100% { transform:translateY(100vh); opacity:0; }
     }
 
     /* start screen */
@@ -96,7 +144,7 @@
       position:fixed;
       top:0;left:0;
       width:100%;height:100%;
-      background:#fdf6f0;
+      background:linear-gradient(135deg,#fdf6f0,#f8efe6);
       display:flex;
       align-items:center;
       justify-content:center;
@@ -105,9 +153,11 @@
     }
 
     #start-screen.fade-out{
-      opacity:0;
-      visibility:hidden;
-      transition:1s;
+      animation:fadeOut 1s forwards;
+    }
+
+    @keyframes fadeOut{
+      to{opacity:0;visibility:hidden;}
     }
   </style>
 </head>
@@ -115,7 +165,7 @@
 <body>
 
 <div id="start-screen">
-  <h2>✨ Tap to Open ✨</h2>
+  <h2 class="glow">✨ Tap to Open Invitation ✨</h2>
 </div>
 
 <audio id="bg-music" loop preload="auto">
@@ -123,12 +173,12 @@
 </audio>
 
 <div class="container">
-  <h2>You're Invited</h2>
-  <h1>Graduation Celebration</h1>
+  <h2>You're Invited to</h2>
+  <h1 class="glow">Graduation Celebration</h1>
 
   <img src="https://i.ibb.co/vCkW4xyV/Chat-GPT-Image-Apr-6-2026-02-23-25-PM.png">
 
-  <div class="name">Tran Hieu</div>
+  <div class="name glow">Tran Hieu</div>
   <div>18 April - 07:00 AM</div>
   <div id="countdown"></div>
 
@@ -145,13 +195,28 @@
 </div>
 
 <script>
-// play music
+// 🎵 FIX NHẠC CHẮC CHẮN CHẠY
 const startScreen = document.getElementById('start-screen');
 const music = document.getElementById('bg-music');
 
 startScreen.addEventListener('click', () => {
-  music.volume = 0.7;
-  music.play().catch(()=>{});
+  music.volume = 0;
+  music.muted = true;
+
+  music.play().then(() => {
+    music.muted = false;
+
+    // fade in mượt
+    let v = 0;
+    const fade = setInterval(()=>{
+      if(v < 0.7){
+        v += 0.05;
+        music.volume = v;
+      } else clearInterval(fade);
+    },200);
+
+  }).catch(e => console.log(e));
+
   startScreen.classList.add('fade-out');
 });
 
@@ -191,6 +256,15 @@ function renderAll(data){
 }
 
 renderAll(JSON.parse(localStorage.getItem("comments")||"[]"));
+
+// ✨ sparkle effect
+setInterval(()=>{
+  const s=document.createElement("div");
+  s.className="sparkle";
+  s.style.left=Math.random()*100+"vw";
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),3000);
+},200);
 </script>
 
 </body>
