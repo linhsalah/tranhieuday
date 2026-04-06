@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Graduation Celebration</title>
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
@@ -13,7 +12,7 @@
       margin:0;
       font-family:'Montserrat',sans-serif;
       text-align:center;
-      background: linear-gradient(135deg, #fdf6f0, #f8efe6); /* nền kem sữa */
+      background: linear-gradient(135deg, #fdf6f0, #f8efe6);
       overflow-x:hidden;
     }
 
@@ -28,19 +27,12 @@
       font-family:'Playfair Display',serif;
       font-size:48px;
       margin:10px 0;
-      animation: slideDown 1s ease;
     }
 
     h2 {
-      font-family:'Playfair Display', serif;
       font-size:22px;
       letter-spacing:4px;
-      text-transform:uppercase;
       color:#9c7b5a;
-      margin-bottom:10px;
-      opacity:0;
-      animation: fadeInUp 1s ease forwards;
-      animation-delay:0.3s;
     }
 
     img {
@@ -48,45 +40,17 @@
       max-width:600px;
       border-radius:16px;
       box-shadow:0 20px 50px rgba(0,0,0,0.15);
-      transition: transform 0.5s ease;
-    }
-
-    img:hover {
-      transform: scale(1.03);
     }
 
     .name {
-      font-family:'Playfair Display',serif;
       font-size:56px;
       margin-top:30px;
-      animation: fadeInUp 1.2s ease;
     }
 
-    .subtitle {
-      color:#666;
-      margin-bottom:20px;
-      font-style:italic;
-    }
+    .date { font-size:36px; }
 
-    .date {
-      font-family:'Playfair Display', serif;
-      font-size:36px;
-      letter-spacing:1px;
-    }
+    .countdown { margin:20px 0; }
 
-    .countdown {
-      font-size:18px;
-      letter-spacing:2px;
-      color:#777;
-      margin:20px 0;
-    }
-
-    /* glow luxury */
-    .glow {
-      text-shadow: 0 0 10px rgba(255,215,180,0.8);
-    }
-
-    /* comments */
     .comments { margin-top:40px; }
 
     input, textarea {
@@ -95,21 +59,15 @@
       margin:6px 0;
       border-radius:8px;
       border:1px solid #ddd;
-      background:#fffaf5;
     }
 
     button {
       padding:12px 25px;
-      border:none;
-      background:linear-gradient(135deg,#d4a373,#b08968);
+      background:#b08968;
       color:white;
+      border:none;
       border-radius:8px;
       cursor:pointer;
-      transition:0.3s;
-    }
-
-    button:hover {
-      transform: scale(1.05);
     }
 
     .comment-wrapper {
@@ -131,68 +89,53 @@
       padding:12px;
       margin:10px;
       border-radius:10px;
-      box-shadow:0 5px 15px rgba(0,0,0,0.08);
     }
 
-    @keyframes scrollLoop {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-50%); }
-    }
-
-    /* animations */
-    @keyframes fadeIn {
-      from {opacity:0;} to {opacity:1;}
-    }
-
-    @keyframes slideDown {
-      from {transform:translateY(-40px);opacity:0;} to {transform:translateY(0);opacity:1;}
-    }
-
-    @keyframes fadeInUp {
-      from {transform:translateY(40px);opacity:0;} to {transform:translateY(0);opacity:1;}
-    }
-
-    /* sparkle effect */
-    .sparkle {
+    /* start screen */
+    #start-screen{
       position:fixed;
-      width:6px;
-      height:6px;
-      background:gold;
-      border-radius:50%;
-      animation: sparkle 3s linear infinite;
+      top:0;left:0;
+      width:100%;height:100%;
+      background:#fdf6f0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+      cursor:pointer;
     }
 
-    @keyframes sparkle {
-      0% { transform:translateY(0); opacity:1; }
-      100% { transform:translateY(100vh); opacity:0; }
+    #start-screen.fade-out{
+      opacity:0;
+      visibility:hidden;
+      transition:1s;
     }
-
   </style>
 </head>
+
 <body>
 
-<!-- 🎵 NHẠC ẨN -->
-<iframe src="https://www.youtube.com/embed/pT5UdkdfKRs?autoplay=1&mute=1&loop=1&playlist=pT5UdkdfKRs"
-style="width:0;height:0;border:0;opacity:0"></iframe>
+<div id="start-screen">
+  <h2>✨ Tap to Open ✨</h2>
+</div>
+
+<audio id="bg-music" loop preload="auto">
+  <source src="buong_doi_tay.mp3" type="audio/mpeg">
+</audio>
 
 <div class="container">
-  <h2>You're Invited to</h2>
-  <h1 class="glow">Graduation Celebration</h1>
+  <h2>You're Invited</h2>
+  <h1>Graduation Celebration</h1>
 
   <img src="https://i.ibb.co/vCkW4xyV/Chat-GPT-Image-Apr-6-2026-02-23-25-PM.png">
 
-  <div class="name glow">Tran Hieu</div>
-  <div class="subtitle">Sự có mặt của bạn là niềm vinh hạnh lớn nhất của cuộc đời tôi</div>
-
-  <div class="date">18 April - 07:00 AM</div>
-  <div class="countdown" id="countdown"></div>
-
-  <div>235 Hoàng Quốc Việt, Cầu Giấy, Hà Nội</div>
+  <div class="name">Tran Hieu</div>
+  <div>18 April - 07:00 AM</div>
+  <div id="countdown"></div>
 
   <div class="comments">
     <h3>💬 Gửi lời chúc</h3>
-    <input id="name" placeholder="Tên của bạn">
-    <textarea id="message" placeholder="Lời chúc..."></textarea>
+    <input id="name" placeholder="Tên">
+    <textarea id="message" placeholder="Lời chúc"></textarea>
     <button onclick="addComment()">Gửi</button>
 
     <div class="comment-wrapper">
@@ -202,6 +145,16 @@ style="width:0;height:0;border:0;opacity:0"></iframe>
 </div>
 
 <script>
+// play music
+const startScreen = document.getElementById('start-screen');
+const music = document.getElementById('bg-music');
+
+startScreen.addEventListener('click', () => {
+  music.volume = 0.7;
+  music.play().catch(()=>{});
+  startScreen.classList.add('fade-out');
+});
+
 // countdown
 const target = new Date("April 18, 2026 07:00:00").getTime();
 setInterval(()=>{
@@ -215,11 +168,6 @@ setInterval(()=>{
 },1000);
 
 // comments
-function loadComments(){
-  const data=JSON.parse(localStorage.getItem("comments")||"[]");
-  renderAll(data);
-}
-
 function addComment(){
   const name=document.getElementById("name").value;
   const msg=document.getElementById("message").value;
@@ -228,91 +176,21 @@ function addComment(){
   const data=JSON.parse(localStorage.getItem("comments")||"[]");
   data.push({name,msg});
   localStorage.setItem("comments",JSON.stringify(data));
-
   renderAll(data);
 }
 
 function renderAll(data){
   const track=document.getElementById("track");
   track.innerHTML="";
-
-  let list=data;
-  if(data.length>10){ list=data.concat(data); }
-
-  list.forEach(c=>{
+  data.forEach(c=>{
     const div=document.createElement("div");
     div.className="comment-box";
     div.innerHTML=`<b>${c.name}</b>: ${c.msg}`;
     track.appendChild(div);
   });
-
-  if(data.length>10){
-    track.style.animation="scrollLoop 20s linear infinite";
-  }else{
-    track.style.animation="none";
-  }
 }
 
-loadComments();
-
-// sparkle effect
-setInterval(()=>{
-  const s=document.createElement("div");
-  s.className="sparkle";
-  s.style.left=Math.random()*100+"vw";
-  s.style.top="-10px";
-  document.body.appendChild(s);
-  setTimeout(()=>s.remove(),3000);
-},200);
-</script>
-
-
-<!-- 🎬 MÀN MỞ THIỆP -->
-<div id="start-screen">
-  <div class="start-content">
-    ✨ Tap to Open Invitation ✨
-  </div>
-</div>
-
-<audio id="bg-music" loop>
-  <source src="Buông đôi tay nhau ra phiên bản thính phòng.mp3" type="audio/mpeg">
-</audio>
-
-<style>
-#start-screen{
-  position:fixed;
-  top:0;left:0;
-  width:100%;height:100%;
-  background:linear-gradient(135deg,#fdf6f0,#f8efe6);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
-  cursor:pointer;
-}
-.start-content{
-  font-family:'Playfair Display',serif;
-  font-size:28px;
-  color:#9c7b5a;
-  letter-spacing:2px;
-  animation: fadeIn 2s ease;
-}
-#start-screen.fade-out{
-  animation: fadeOut 1s forwards;
-}
-@keyframes fadeOut{
-  to{opacity:0;visibility:hidden;}
-}
-</style>
-
-<script>
-const startScreen = document.getElementById('start-screen');
-const music = document.getElementById('bg-music');
-
-startScreen.addEventListener('click', () => {
-  music.play();
-  startScreen.classList.add('fade-out');
-});
+renderAll(JSON.parse(localStorage.getItem("comments")||"[]"));
 </script>
 
 </body>
